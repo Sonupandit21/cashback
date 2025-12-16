@@ -37,20 +37,20 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-20">
+      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-5xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
               Earn Real Cash Rewards On Every Purchase
             </h1>
-            <p className="text-xl mb-8 text-primary-100">
+            <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-primary-100">
               Discover exclusive deals and earn real cashback on your favorite brands. 
               Join our community of smart shoppers today.
             </p>
-            <div className="flex justify-center space-x-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:space-x-4">
               <Link
                 to="/offers"
-                className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-primary-50 transition flex items-center"
+                className="bg-white text-primary-600 px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-primary-50 transition flex items-center justify-center"
               >
                 Explore Offers
                 <FiArrowRight className="ml-2" />
@@ -59,7 +59,7 @@ const Home = () => {
                 // href="https://t.me/yourtelegram"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-600 transition"
+                className="bg-primary-700 text-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-primary-600 transition"
               >
                 Join Telegram
               </a>

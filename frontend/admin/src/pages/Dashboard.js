@@ -169,16 +169,16 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-6 sm:py-8 px-3 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold">Admin Dashboard</h1>
           <button
             onClick={() => {
               resetForm();
               setShowModal(true);
             }}
-            className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition flex items-center"
+            className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition flex items-center justify-center w-full sm:w-auto"
           >
             <FiPlus className="mr-2" />
             Add Offer
@@ -292,7 +292,8 @@ const Dashboard = () => {
           </div>
           <div className="bg-white rounded-lg shadow overflow-hidden">
             {supportTickets.length > 0 ? (
-              <table className="min-w-full divide-y divide-gray-200">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -382,6 +383,7 @@ const Dashboard = () => {
                   ))}
                 </tbody>
               </table>
+              </div>
             ) : (
               <div className="p-8 text-center text-gray-500">
                 <FiMessageCircle className="mx-auto text-4xl text-gray-300 mb-2" />
@@ -404,7 +406,8 @@ const Dashboard = () => {
           </div>
           <div className="bg-white rounded-lg shadow overflow-hidden">
             {offers.filter(o => o.isFeatured).length > 0 ? (
-              <table className="min-w-full divide-y divide-gray-200">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-yellow-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -464,6 +467,7 @@ const Dashboard = () => {
                   ))}
                 </tbody>
               </table>
+              </div>
             ) : (
               <div className="p-8 text-center text-gray-500">
                 <FiStar className="mx-auto text-4xl text-gray-300 mb-2" />
@@ -478,6 +482,7 @@ const Dashboard = () => {
           <h2 className="text-2xl font-bold mb-4">All Offers</h2>
         </div>
         <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -535,6 +540,7 @@ const Dashboard = () => {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
 
         {/* Modal */}

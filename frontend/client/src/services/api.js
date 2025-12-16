@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 // Create axios instance with default config
+// In production, you can set REACT_APP_API_BASE_URL to your backend URL (e.g. https://cashback-api.onrender.com/api)
+// For local development, it falls back to '/api' which works with the CRA proxy setting.
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: process.env.REACT_APP_API_BASE_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
   },
