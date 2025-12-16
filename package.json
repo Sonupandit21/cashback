@@ -1,0 +1,43 @@
+{
+  "name": "cashback-app",
+  "version": "1.0.0",
+  "description": "Cashback offers platform with admin dashboard",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "client": "cd frontend/client && npm start",
+    "admin": "cd frontend/admin && npm start",
+    "client-install": "cd frontend/client && npm install",
+    "admin-install": "cd frontend/admin && npm install",
+    "dev-full": "concurrently \"npm run dev\" \"npm run client\" \"npm run admin\"",
+    "build": "cd frontend/client && npm run build",
+    "build-admin": "cd frontend/admin && npm run build",
+    "create-admin": "node server/scripts/createAdmin.js",
+    "seed-offers": "node server/scripts/seedOffers.js",
+    "update-flipkart": "node server/scripts/updateFlipkartOffer.js",
+    "check-upi": "node server/scripts/checkUPI.js",
+    "check-upi-collection": "node server/scripts/checkUPICollection.js",
+    "check-upi-data": "node server/scripts/checkUPIData.js",
+    "check-clicks": "node server/scripts/checkClickIds.js",
+    "sync-click-status": "node server/scripts/syncClickStatus.js"
+  },
+  "keywords": ["cashback", "offers", "mern"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "axios": "^1.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "concurrently": "^8.2.0"
+  }
+}
+
