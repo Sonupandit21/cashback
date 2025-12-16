@@ -21,11 +21,15 @@ app.use('/api/withdraw', require('./routes/withdraw'));
 app.use('/api/support', require('./routes/support'));
 app.use('/api/postback', require('./routes/postback'));
 
-// Serve static files from React app
+// Serve static files from React app (user frontend)
+// In this repo, the user React app lives in frontend/client
+// and the production build is in frontend/client/build.
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+  const clientBuildPath = path.join(__dirname, '../frontend/client/build');
+  app.use(express.static(clientBuildPath));
+
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
   });
 }
 
