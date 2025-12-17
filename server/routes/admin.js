@@ -836,16 +836,23 @@ router.get('/trackier/clicks', async (req, res) => {
       }
     }
 
+    // Pagination parameters
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    // Accurate stats should reflect the full dataset, not just the current page
+    const totalClicks = await Click.countDocuments(query);
+    const convertedCount = await Click.countDocuments({ ...query, converted: true });
+    const totalPages = Math.ceil(totalClicks / limit);
+
     // Paginated list for table display
     const clicks = await Click.find(query)
       .populate('userId', 'name email')
       .populate('offerId', 'title trackierOfferId')
       .sort({ createdAt: -1 })
-      .limit(parseInt(req.query.limit) || 100);
-
-    // Accurate stats should reflect the full dataset, not just the current page
-    const totalClicks = await Click.countDocuments(query);
-    const convertedCount = await Click.countDocuments({ ...query, converted: true });
+      .skip(skip)
+      .limit(limit);
 
     const stats = {
       total: totalClicks,
@@ -853,7 +860,10 @@ router.get('/trackier/clicks', async (req, res) => {
       conversionRate: totalClicks > 0 
         ? ((convertedCount / totalClicks) * 100).toFixed(2)
         : 0,
-      returned: clicks.length // helps debug pagination vs totals
+      returned: clicks.length, // helps debug pagination vs totals
+      page: page,
+      limit: limit,
+      totalPages: totalPages
     };
 
     res.json({

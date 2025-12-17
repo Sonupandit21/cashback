@@ -33,11 +33,13 @@ const TrackierStats = () => {
   });
 
   const [hasSynced, setHasSynced] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(20);
 
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, dateRange.startDate, dateRange.endDate]);
+  }, [activeTab, dateRange.startDate, dateRange.endDate, currentPage]);
 
   // Auto-refresh data every 30 seconds to show new installs/postbacks
   useEffect(() => {
@@ -70,7 +72,7 @@ const TrackierStats = () => {
           setHasSynced(true);
           console.log('🔄 Syncing click status with postbacks...');
         }
-        const data = await getTrackierClicks(syncParams);
+        const data = await getTrackierClicks({ ...syncParams, page: currentPage, limit: itemsPerPage });
         console.log('Clicks data received:', data);
         setClicks(data.clicks || []);
         setStats({ clicks: data.stats });
@@ -107,6 +109,7 @@ const TrackierStats = () => {
       ...prev,
       [name]: value
     }));
+    setCurrentPage(1); // Reset to first page when date range changes
   };
 
   const formatDate = (dateString) => {
@@ -199,7 +202,7 @@ const TrackierStats = () => {
               Refresh Now
             </button>
             {activeTab === 'clicks' && (
-              <button
+                    <button
                 onClick={async () => {
                   try {
                     setLoading(true);
@@ -207,7 +210,9 @@ const TrackierStats = () => {
                     const syncParams = { 
                       ...(dateRange.startDate ? { startDate: dateRange.startDate } : {}),
                       ...(dateRange.endDate ? { endDate: dateRange.endDate } : {}),
-                      sync: 'true' 
+                      sync: 'true',
+                      page: currentPage,
+                      limit: itemsPerPage
                     };
                     console.log('Sync params:', syncParams);
                     const data = await getTrackierClicks(syncParams);
@@ -282,7 +287,10 @@ const TrackierStats = () => {
                 Overview
               </button>
               <button
-                onClick={() => setActiveTab('clicks')}
+                onClick={() => {
+                  setActiveTab('clicks');
+                  setCurrentPage(1); // Reset to first page when switching tabs
+                }}
                 className={`py-4 px-6 text-sm font-medium border-b-2 transition ${
                   activeTab === 'clicks'
                     ? 'border-primary-600 text-primary-600'
@@ -539,6 +547,59 @@ const TrackierStats = () => {
                 </tbody>
               </table>
             </div>
+            {/* Pagination */}
+            {stats?.clicks?.totalPages > 1 && (
+              <div className="bg-white px-6 py-4 border-t border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-gray-700">
+                    Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, stats.clicks.total)} of {stats.clicks.total} clicks
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      className="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Previous
+                    </button>
+                    <div className="flex items-center space-x-1">
+                      {Array.from({ length: Math.min(5, stats.clicks.totalPages) }, (_, i) => {
+                        let pageNum;
+                        if (stats.clicks.totalPages <= 5) {
+                          pageNum = i + 1;
+                        } else if (currentPage <= 3) {
+                          pageNum = i + 1;
+                        } else if (currentPage >= stats.clicks.totalPages - 2) {
+                          pageNum = stats.clicks.totalPages - 4 + i;
+                        } else {
+                          pageNum = currentPage - 2 + i;
+                        }
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => setCurrentPage(pageNum)}
+                            className={`px-3 py-2 text-sm font-medium rounded-md ${
+                              currentPage === pageNum
+                                ? 'bg-primary-600 text-white'
+                                : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(stats.clicks.totalPages, prev + 1))}
+                      disabled={currentPage === stats.clicks.totalPages}
+                      className="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
