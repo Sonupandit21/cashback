@@ -5,9 +5,11 @@ import axios from 'axios';
 // For local development, it falls back to '/api' which works with the CRA proxy setting.
 const apiBaseURL = process.env.REACT_APP_API_BASE_URL || '/api';
 
-// Log API base URL in development to help debug
-if (process.env.NODE_ENV === 'development') {
-  console.log('API Base URL:', apiBaseURL);
+// Log API base URL to help debug (always log in production to catch missing env vars)
+console.log('API Base URL:', apiBaseURL);
+if (!process.env.REACT_APP_API_BASE_URL) {
+  console.warn('⚠️ REACT_APP_API_BASE_URL not set! API calls will use relative path /api');
+  console.warn('Set REACT_APP_API_BASE_URL in Vercel Environment Variables to your Render backend URL');
 }
 
 const api = axios.create({
