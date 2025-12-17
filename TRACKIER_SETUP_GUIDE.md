@@ -2,6 +2,19 @@
 
 Complete guide for setting up Trackier integration with your Cashback Platform.
 
+## ⚠️ Important: Replace Placeholder URLs
+
+**Before using this guide, replace all instances of `yourdomain.com` with your actual production URL:**
+
+- **User Frontend URL**: `https://cashback-client.vercel.app` (or your actual Vercel URL)
+- **Backend API URL**: `https://your-backend.onrender.com/api` (your actual Render backend URL)
+
+**To find your production URL:**
+1. Go to Vercel Dashboard → Your Project
+2. Click "Visit" button at the top
+3. Copy that URL (e.g., `https://cashback-client.vercel.app`)
+4. Use it everywhere this guide says `yourdomain.com`
+
 ## Table of Contents
 
 1. [Overview](#overview)
