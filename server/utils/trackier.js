@@ -44,49 +44,14 @@ const trackClick = async (trackierOfferId, userId, additionalData = {}) => {
     };
   }
 
-  try {
-    
-    // Prepare click tracking data
-    const clickData = {
-      offer_id: trackierOfferId,
-      publisher_id: TRACKIER_PUBLISHER_ID || userId.toString(),
-      advertiser_id: TRACKIER_ADVERTISER_ID,
-      click_id: clickId,
-      user_id: userId.toString(),
-      ip_address: additionalData.ipAddress || '',
-      user_agent: additionalData.userAgent || '',
-      referrer: additionalData.referrer || '',
-      timestamp: new Date().toISOString(),
-      ...additionalData.customParams // Allow custom parameters
-    };
-
-    // Track click via Trackier API
-    // Note: Adjust endpoint based on Trackier's actual API documentation
-    const response = await axios.post(
-      `${TRACKIER_API_URL}/api/v1/clicks`,
-      clickData,
-      {
-        headers: {
-          'Authorization': `Bearer ${TRACKIER_API_KEY}`,
-          'Content-Type': 'application/json',
-          'X-API-Key': TRACKIER_API_KEY
-        }
-      }
-    );
-
-    return { 
-      success: true, 
-      clickId: clickId,
-      data: response.data 
-    };
-  } catch (error) {
-    console.error('Trackier click tracking error:', error.response?.data || error.message);
-    return {
-      success: false,
-      message: error.response?.data?.message || 'Tracking failed',
-      clickId // Return click ID for local tracking
-    };
-  }
+  // Skip external Trackier API call - clicks are tracked locally in MongoDB
+  // Trackier will receive conversion data via postback when installs happen
+  // The click_id is passed in the tracking URL and returned via postback
+  return { 
+    success: true, 
+    clickId: clickId,
+    message: 'Click tracked locally (Trackier receives data via tracking URL redirect)'
+  };
 };
 
 /**
