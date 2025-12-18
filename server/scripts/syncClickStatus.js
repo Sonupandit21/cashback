@@ -1,33 +1,4 @@
-1️⃣ Testing on Localhost / Desktop
-
-Your IP is ::1 (localhost).
-
-Google Play doesn’t register installs from a desktop or localhost.
-
-Your admin panel only updates when the install happens on an actual Android device via the Play Store link.
-
-2️⃣ Click ID / Referrer Not Received
-
-Each entry has a unique Click ID (e.g., CLID-5UOHMJL).
-
-If the install doesn’t pass the referrer to the app, your panel cannot match it and stays Pending.
-
-The app must implement the Install Referrer API or SDK to report back the Click ID.
-
-3️⃣ App Not Installed via the Link
-
-If the app is installed manually (APK or another link), Google Play won’t send a postback, so the status remains Pending.
-
-✅ Summary:
-Pending = Click recorded, but no confirmed install received.
-
-To fix this:
-
-Install the app on a real Android device using the exact Play Store link with the referrer.
-
-Ensure the app has the referrer SDK/API implemented to report installs.
-
-Check that your admin panel endpoint is correctly receiving the install postback.const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const Click = require('../models/Click');
 const Postback = require('../models/Postback');
 require('dotenv').config();
@@ -118,4 +89,3 @@ const syncClickStatus = async () => {
 };
 
 syncClickStatus();
-
