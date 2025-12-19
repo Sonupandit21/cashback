@@ -130,3 +130,18 @@ Create an admin user through the registration endpoint or MongoDB directly:
 }
 ```admin123
 
+## 🚀 Production Deployment
+
+Ready to deploy to production? Check out our comprehensive deployment guide:
+
+- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Complete step-by-step guide for deploying to Render (backend) and Vercel (frontend)
+- **[DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md)** - Quick checklist to ensure nothing is missed during deployment
+
+### Quick Overview
+
+1. **Backend**: Deploy to [Render](https://render.com) (free tier available)
+2. **Database**: Use [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (free tier available)
+3. **Frontend**: Deploy both user and admin apps to [Vercel](https://vercel.com) (free tier available)
+
+See the deployment guide for detailed instructions, environment variable configuration, and troubleshooting tips.
+
