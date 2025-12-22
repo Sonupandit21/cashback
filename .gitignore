@@ -1,7 +1,13 @@
 node_modules/
 .env
+.env.local
+.env.production
 uploads/
 client/node_modules/
 client/build/
+frontend/client/node_modules/
+frontend/client/build/
+frontend/admin/node_modules/
+frontend/admin/build/
 .DS_Store
 *.log
